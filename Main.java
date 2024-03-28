@@ -1,45 +1,98 @@
-package bigtech.array_list;
+package bigtech.stack_queue;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.Stack;
 
-// 문제001 숫자의 합 구하기
+// 문제011 스택으로 오름차순 수열 만들기
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("===== [시작] =====");
-		
-		// ============ 내 풀이 ============
-//		Scanner scanner = new Scanner(System.in);
-//		// 첫째 줄
-//		int first = scanner.nextInt();
-//		// 둘째 줄
-//		String number_str = scanner.next();
-//		
-//		long result = 0;
-//		String[] str_arr = number_str.split("");
-//		for(int i = 0; i < str_arr.length; i++) {
-//			result += Long.parseLong(str_arr[i]);
-//		}
-//		
-//		System.out.println("result : " + result);
-//		scanner.close();
-		
-		// ============ 책 보고 난 후 정리 ============
 		Scanner scanner = new Scanner(System.in);
-		// 첫째 줄
-		int first = scanner.nextInt();
-		// 둘째 줄
-		String two = scanner.next();
-		// from String to char[]
-		char[] char_arr = two.toCharArray();
+		// 첫 째줄 입력
+		// 둘 째줄 입력 --> var arr = 배열[첫 째줄 입력 값]
+		// Stack 선언
+		// Stack +1 씩 push
+		// push 하면서 arr 값과 비교
 		
-		long result = 0;
-		for (int i = 0; i < char_arr.length; i++) {
-			result += char_arr[i] - '0'; // 아스키코드 값 활용
+		/*
+		 * 경우의 수
+		 * 증가하는 자연수 = arr 원소 값 -> pop
+		 * 증가하는 자연수 > arr 원소 값 -> No
+		 * 증가하는 자연수 < arr 원소 값 -> push
+		 * 
+		 * 4 3 6 8 7 5 2 1
+		 * 1 2 5 3 4
+		 * */
+		
+		System.out.println("===== [시작] =====");
+		int count = scanner.nextInt();
+		int[] arr = new int[count];
+		for(int i = 0; i < arr.length; i++) {
+			arr[i] = scanner.nextInt();
 		}
-		System.out.println(result);
+		StringBuffer bf = new StringBuffer();
+		Stack<Integer> stack = new Stack<>();
+		int val = 0;
+		stack.push(val); // EmptyStackException 방지, 문제에서 (1이상 n이하의 정수)가 주어진다고 했으므로 이와 무관한 '0'을 넣었다.
+		int idx = 0;
+		boolean flag = true;
+		while(flag) {
+			int pekNum = stack.peek();
+			int arrNum = arr[idx];
+//			
+//			System.out.println("---------------------------");
+//			System.out.println("pekNum : " + pekNum);
+//			System.out.println("arrNum : " + arrNum);
+//			System.out.println("---------------------------");
+			
+			if(pekNum == arrNum) {
+				stack.pop();
+				bf.append("-\n");
+				idx++;
+			} else if(pekNum < arrNum) {
+				stack.push(++val); // 전위연산자(++val), 후위연산자(val++)에 따라 결과 다르니 주의
+				bf.append("+\n");
+			} else if(pekNum > arrNum) {
+				System.out.println("NO");
+				return;		
+			}
+			
+			if(idx == arr.length) {
+				flag = false;
+			}
+		}
 		scanner.close();
-		System.out.println("===== [끝] =====");
+		
+		System.out.println(bf.toString());
+//		System.out.println("===== [끝] =====");
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 
-// 문제 023 연결 요소의 개수 구하기
+// 문제023 연결 요소의 개수 구하기
 public class DfsBfsMain {
 	// 1. 인접 리스트로 그래프 표현
 	static ArrayList<Integer>[] A;
@@ -58,12 +58,13 @@ public class DfsBfsMain {
 		visited[num] = true;
 		for(int i : A[num]) {
 			if(visited[i] == false) {
+				System.out.println("i : " + i);
 				DFS(i); // 재귀함수
 			}
 		}
 		
 	}
-	// 꺼낸 노드를 탐색 순서에 기입한다.
+	// 꺼낸 노드를 탐색 순서에 기입한다. ==> 적어도 이 문제에서는 무시해도 될 듯
 	// 꺼낸 노드의 인접 노드를 스택에 삽입하며 이를 방문 배열에 체크한다.
 	// 스택에 삽입할 때 방문 배열과 대조해 이미 방문한 노드는 또 삽입(방문)하지 않게 주의
 }
@@ -77,8 +78,32 @@ public class DfsBfsMain {
 3 4
 4 6
  *
+ */
+
+/*
  *
- **/
+6 8
+1 2
+2 5
+5 1
+3 4
+4 6
+5 4
+2 4
+2 3
+ *
+ */
+
+/*
+ *
+1 - 2, 5
+2 - 1, 5
+3 - 4
+4 - 3, 6
+5 - 2, 1
+6 - 4
+ *
+ */
 
 
 

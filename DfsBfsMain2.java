@@ -37,15 +37,24 @@ public class DfsBfsMain2 {
 		int finalNum = startNum * 10 - 1;
 		startNum *= 2; // 맨 앞자리가 1 이면 어차피 소수가 아니다.
 		
-		System.out.println("startNum : " + startNum);
-		System.out.println("finalNum : " + finalNum);
+		// 나눌 숫자
+		int dividNum = startNum / 2;
+		
+		// System.out.println("startNum : " + startNum);
+		// System.out.println("finalNum : " + finalNum);
+		// System.out.println("dividNum : " + dividNum);
 		
 		ArrayList<Integer> list = new ArrayList<>();
+		
 		for(int i = startNum; i <= finalNum; i++) {
 			double sqrtNum = Math.sqrt(i);
-			if(i % 2 == 0 || sqrtNum == Math.floor(sqrtNum)) {
+			double divdNum = Math.floor(i / dividNum);
+			if((i > 2 && i % 2 == 0) || sqrtNum == Math.floor(sqrtNum)) {
 				// 불필요한 계산을 최대한 줄이기 위해 해당 조건문 추가
 				// 짝수 or 제곱근이 정수인 숫자는 어차피 소수가 아님
+				continue;
+			} else if((i > 2 && divdNum > 2.0  && divdNum % Math.sqrt(divdNum) == 0) || (i > 2 && divdNum % 2 == 0 && divdNum > 2.0)) {
+				// System.out.println("test : " + divdNum);
 				continue;
 			} else {
 				int result = prime(i);
@@ -56,18 +65,25 @@ public class DfsBfsMain2 {
 		}
 		
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		for(int i = 0; i < list.size(); i++) {
-			 System.out.println(list.get(i));
+		for(int num : list) {
+			System.out.println(num);
 		}
+
 		bw.flush();
 		sc.close();
 	}
 	
 	static int prime(int num) {
+		System.out.println("numnum : " + num);
 		// 완벽한 소수 O : return 해당 숫자
 		// 완벽한 소수 X : return 0
 		
+		// 일의 자리 부터 검사, 일의 자리가 꽝이면 굳이 재귀함수 자체를 시작할 필요가 없다.
+		
+		
 		if(num <= 1) {
+			return 0;
+		} else if(num > 2 && num % 2 == 0) {
 			return 0;
 		} else {
 			// (1과 자기 자신)을 제외한 약수가 있는 경우 완벽한 소수가 아니다.
@@ -79,19 +95,17 @@ public class DfsBfsMain2 {
 			}
 		}
 		
+		// 마지막 남은 1자리수 숫자가 모든 소수판별 검사를 통과하고 이 자리까지 온 거면 그 놈은 완전한 소수이다.
 		if(num < 10) {
 			return num;
 		}
 		return prime((int) Math.floor(num / 10));
-//		if(num > 9) {
-//			result = prime((int) Math.floor(num / 10));
-//		}
 		
-		// 마지막 남은 1자리수 숫자가 모든 소수판별 검사를 통과하고 이 자리까지 온 거면 그 놈은 완전한 소수이다.
 		
 	}
 }
-
+// 23, 29, 31, 37, 53, 59, 71, 73, 79
+// 
 /*
  * 1 ==> 1
  * 
